@@ -793,7 +793,7 @@ func (mgr *PodManager) LogStats() {
 
 	log.Infof("--------------------------------- Pod Startup Latencies (ms) " +
 		"---------------------------------")
-	log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "99%")
+	log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "95%", "99%")
 
 	var latency perf_util.OperationLatencyMetric
 	latency = mgr.createToScheLatency
@@ -804,7 +804,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod creation latency stats (server): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.scheToStartLatency
@@ -815,7 +815,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod scheduling latency stats (server): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.startToPulledLatency
@@ -826,7 +826,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod image pulling latency stats (server): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.pulledToRunLatency
@@ -837,7 +837,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod starting latency stats (server): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.createToRunLatency
@@ -848,7 +848,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod startup total latency (server): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.createToReadyLatency
@@ -859,7 +859,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod client-server e2e latency (create-to-ready): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.firstToSchedLatency
@@ -870,7 +870,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod scheduling latency stats (client): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.schedToInitdLatency
@@ -881,7 +881,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod initialization latency on kubelet (client): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.initdToReadyLatency
@@ -892,7 +892,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod starting latency stats (client): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	latency = mgr.firstToReadyLatency
@@ -903,7 +903,7 @@ func (mgr *PodManager) LogStats() {
 	} else {
 		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod startup total latency (client): ",
-			"---", "---", "---", "---")
+			"---", "---", "---", "---", "---")
 	}
 
 	log.Infof("--------------------------------- Pod API Call Latencies (ms) " +
