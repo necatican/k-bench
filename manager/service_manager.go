@@ -29,8 +29,10 @@ import (
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	restclient "k8s.io/client-go/rest"
+
 	//"k8s.io/apimachinery/pkg/fields"
 	"k-bench/perf_util"
+
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/kubernetes"
 )
@@ -398,7 +400,7 @@ func (mgr *ServiceManager) LogStats() {
 
 	log.Infof("----------------------------- Service API Call Latencies (ms) " +
 		"-----------------------------")
-	log.Infof("%-50v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "99%")
+	log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "95%", "99%")
 
 	for m, _ := range mgr.apiTimes {
 		sort.Slice(mgr.apiTimes[m],
@@ -406,10 +408,12 @@ func (mgr *ServiceManager) LogStats() {
 		mid := float32(mgr.apiTimes[m][len(mgr.apiTimes[m])/2]) / float32(time.Millisecond)
 		min := float32(mgr.apiTimes[m][0]) / float32(time.Millisecond)
 		max := float32(mgr.apiTimes[m][len(mgr.apiTimes[m])-1]) / float32(time.Millisecond)
+		p95 := float32(mgr.apiTimes[m][len(mgr.apiTimes[m])-1-len(mgr.apiTimes[m])/20]) /
+			float32(time.Millisecond)
 		p99 := float32(mgr.apiTimes[m][len(mgr.apiTimes[m])-1-len(mgr.apiTimes[m])/100]) /
 			float32(time.Millisecond)
-		log.Infof("%-50v %-10v %-10v %-10v %-10v", m+" service latency: ",
-			mid, min, max, p99)
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", m+" service latency: ",
+			mid, min, max, p95, p99)
 	}
 }
 

@@ -793,131 +793,133 @@ func (mgr *PodManager) LogStats() {
 
 	log.Infof("--------------------------------- Pod Startup Latencies (ms) " +
 		"---------------------------------")
-	log.Infof("%-50v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "99%")
+	log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "99%")
 
 	var latency perf_util.OperationLatencyMetric
 	latency = mgr.createToScheLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod creation latency stats (server): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod creation latency stats (server): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.scheToStartLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod scheduling latency stats (server): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod scheduling latency stats (server): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.startToPulledLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod image pulling latency stats (server): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod image pulling latency stats (server): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.pulledToRunLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod starting latency stats (server): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod starting latency stats (server): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.createToRunLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod startup total latency (server): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod startup total latency (server): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.createToReadyLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod client-server e2e latency: ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod client-server e2e latency (create-to-ready): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.firstToSchedLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod scheduling latency stats (client): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod scheduling latency stats (client): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.schedToInitdLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod initialization latency on kubelet (client): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod initialization latency on kubelet (client): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.initdToReadyLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod starting latency stats (client): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod starting latency stats (client): ",
 			"---", "---", "---", "---")
 	}
 
 	latency = mgr.firstToReadyLatency
 	if latency.Valid {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod startup total latency (client): ",
-			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P99)
+			latency.Latency.Mid, latency.Latency.Min, latency.Latency.Max, latency.Latency.P95, latency.Latency.P99)
 	} else {
-		log.Infof("%-50v %-10v %-10v %-10v %-10v",
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v",
 			"Pod startup total latency (client): ",
 			"---", "---", "---", "---")
 	}
 
 	log.Infof("--------------------------------- Pod API Call Latencies (ms) " +
 		"--------------------------------")
-	log.Infof("%-50v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "99%")
+	log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "95%", "99%")
 
-	var mid, min, max, p99 float32
+	var mid, min, max, p95, p99 float32
 	for m, _ := range mgr.apiTimes {
 		mid = float32(mgr.apiTimes[m][len(mgr.apiTimes[m])/2]) / float32(time.Millisecond)
 		min = float32(mgr.apiTimes[m][0]) / float32(time.Millisecond)
 		max = float32(mgr.apiTimes[m][len(mgr.apiTimes[m])-1]) / float32(time.Millisecond)
+		p95 = float32(mgr.apiTimes[m][len(mgr.apiTimes[m])-1-len(mgr.apiTimes[m])/20]) /
+			float32(time.Millisecond)
 		p99 = float32(mgr.apiTimes[m][len(mgr.apiTimes[m])-1-len(mgr.apiTimes[m])/100]) /
 			float32(time.Millisecond)
-		log.Infof("%-50v %-10v %-10v %-10v %-10v", m+" pod latency: ", mid, min, max, p99)
+		log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", m+" pod latency: ", mid, min, max, p95, p99)
 	}
 
 	if mgr.scheToStartLatency.Latency.Mid < 0 {
@@ -1222,109 +1224,129 @@ func (mgr *PodManager) CalculateStats() {
 	sort.Slice(createToReady,
 		func(i, j int) bool { return createToReady[i] < createToReady[j] })
 
-	var mid, min, max, p99 float32
+	var mid, min, max, p95, p99 float32
 
 	if len(createToSche) > 0 {
 		mid = float32(createToSche[len(createToSche)/2]) / float32(time.Millisecond)
 		min = float32(createToSche[0]) / float32(time.Millisecond)
 		max = float32(createToSche[len(createToSche)-1]) / float32(time.Millisecond)
+		p95 = float32(createToSche[len(createToSche)-1-len(createToSche)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(createToSche[len(createToSche)-1-len(createToSche)/100]) /
 			float32(time.Millisecond)
 		mgr.createToScheLatency.Valid = true
-		mgr.createToScheLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.createToScheLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(scheToStart) > 0 {
 		mid = float32(scheToStart[len(scheToStart)/2]) / float32(time.Millisecond)
 		min = float32(scheToStart[0]) / float32(time.Millisecond)
 		max = float32(scheToStart[len(scheToStart)-1]) / float32(time.Millisecond)
+		p95 = float32(scheToStart[len(scheToStart)-1-len(scheToStart)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(scheToStart[len(scheToStart)-1-len(scheToStart)/100]) /
 			float32(time.Millisecond)
 		mgr.scheToStartLatency.Valid = true
-		mgr.scheToStartLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.scheToStartLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(startToPulled) > 0 {
 		mid = float32(startToPulled[len(startToPulled)/2]) / float32(time.Millisecond)
 		min = float32(startToPulled[0]) / float32(time.Millisecond)
 		max = float32(startToPulled[len(startToPulled)-1]) / float32(time.Millisecond)
+		p95 = float32(startToPulled[len(startToPulled)-1-len(startToPulled)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(startToPulled[len(startToPulled)-1-len(startToPulled)/100]) /
 			float32(time.Millisecond)
 		mgr.startToPulledLatency.Valid = true
-		mgr.startToPulledLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.startToPulledLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(pulledToRun) > 0 {
 		mid = float32(pulledToRun[len(pulledToRun)/2]) / float32(time.Millisecond)
 		min = float32(pulledToRun[0]) / float32(time.Millisecond)
 		max = float32(pulledToRun[len(pulledToRun)-1]) / float32(time.Millisecond)
+		p95 = float32(pulledToRun[len(pulledToRun)-1-len(pulledToRun)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(pulledToRun[len(pulledToRun)-1-len(pulledToRun)/100]) /
 			float32(time.Millisecond)
 		mgr.pulledToRunLatency.Valid = true
-		mgr.pulledToRunLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.pulledToRunLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(createToRun) > 0 {
 		mid = float32(createToRun[len(createToRun)/2]) / float32(time.Millisecond)
 		min = float32(createToRun[0]) / float32(time.Millisecond)
 		max = float32(createToRun[len(createToRun)-1]) / float32(time.Millisecond)
+		p95 = float32(createToRun[len(createToRun)-1-len(createToRun)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(createToRun[len(createToRun)-1-len(createToRun)/100]) /
 			float32(time.Millisecond)
 		mgr.createToRunLatency.Valid = true
-		mgr.createToRunLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.createToRunLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(createToReady) > 0 {
 		mid = float32(createToReady[len(createToReady)/2]) / float32(time.Millisecond)
 		min = float32(createToReady[0]) / float32(time.Millisecond)
 		max = float32(createToReady[len(createToReady)-1]) / float32(time.Millisecond)
+		p95 = float32(createToReady[len(createToReady)-1-len(createToReady)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(createToReady[len(createToReady)-1-len(createToReady)/100]) /
 			float32(time.Millisecond)
 		if mid < 0 || min < 0 {
 			mgr.negRes = true
 		}
 		mgr.createToReadyLatency.Valid = true
-		mgr.createToReadyLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.createToReadyLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(firstToSched) > 0 {
 		mid = float32(firstToSched[len(firstToSched)/2]) / float32(time.Millisecond)
 		min = float32(firstToSched[0]) / float32(time.Millisecond)
 		max = float32(firstToSched[len(firstToSched)-1]) / float32(time.Millisecond)
+		p95 = float32(firstToSched[len(firstToSched)-1-len(firstToSched)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(firstToSched[len(firstToSched)-1-len(firstToSched)/100]) /
 			float32(time.Millisecond)
 		mgr.firstToSchedLatency.Valid = true
-		mgr.firstToSchedLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.firstToSchedLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(schedToInitd) > 0 {
 		mid = float32(schedToInitd[len(schedToInitd)/2]) / float32(time.Millisecond)
 		min = float32(schedToInitd[0]) / float32(time.Millisecond)
 		max = float32(schedToInitd[len(schedToInitd)-1]) / float32(time.Millisecond)
+		p95 = float32(schedToInitd[len(schedToInitd)-1-len(schedToInitd)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(schedToInitd[len(schedToInitd)-1-len(schedToInitd)/100]) /
 			float32(time.Millisecond)
 		mgr.schedToInitdLatency.Valid = true
-		mgr.schedToInitdLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.schedToInitdLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(initdToReady) > 0 {
 		mid = float32(initdToReady[len(initdToReady)/2]) / float32(time.Millisecond)
 		min = float32(initdToReady[0]) / float32(time.Millisecond)
 		max = float32(initdToReady[len(initdToReady)-1]) / float32(time.Millisecond)
+		p95 = float32(initdToReady[len(initdToReady)-1-len(initdToReady)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(initdToReady[len(initdToReady)-1-len(initdToReady)/100]) /
 			float32(time.Millisecond)
 		mgr.initdToReadyLatency.Valid = true
-		mgr.initdToReadyLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.initdToReadyLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	if len(firstToReady) > 0 {
 		mid = float32(firstToReady[len(firstToReady)/2]) / float32(time.Millisecond)
 		min = float32(firstToReady[0]) / float32(time.Millisecond)
 		max = float32(firstToReady[len(firstToReady)-1]) / float32(time.Millisecond)
+		p95 = float32(firstToReady[len(firstToReady)-1-len(firstToReady)/20]) /
+			float32(time.Millisecond)
 		p99 = float32(firstToReady[len(firstToReady)-1-len(firstToReady)/100]) /
 			float32(time.Millisecond)
 		mgr.firstToReadyLatency.Valid = true
-		mgr.firstToReadyLatency.Latency = perf_util.LatencyMetric{mid, min, max, p99}
+		mgr.firstToReadyLatency.Latency = perf_util.LatencyMetric{mid, min, max, p95, p99}
 	}
 
 	for m, _ := range mgr.apiTimes {

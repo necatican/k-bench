@@ -18,22 +18,25 @@ package manager
 
 import (
 	"fmt"
-	v1 "k8s.io/api/rbac/v1"
-	"k8s.io/apimachinery/pkg/api/meta"
-	"k8s.io/client-go/dynamic"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
+	v1 "k8s.io/api/rbac/v1"
+	"k8s.io/apimachinery/pkg/api/meta"
+	"k8s.io/client-go/dynamic"
+
 	log "github.com/sirupsen/logrus"
 	//appsv1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	restclient "k8s.io/client-go/rest"
+
 	//"k8s.io/apimachinery/pkg/fields"
 	"k-bench/perf_util"
+
 	"k8s.io/client-go/kubernetes"
 )
 
@@ -753,7 +756,7 @@ func (mgr *ResourceManager) LogStats() {
 
 	log.Infof("----------------------------- Resource API Call Latencies (ms) " +
 		"-----------------------------")
-	log.Infof("%-50v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "99%")
+	log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", " ", "median", "min", "max", "95%", "99%")
 	for k, _ := range mgr.apiTimes {
 		for m, _ := range mgr.apiTimes[k] {
 			sort.Slice(mgr.apiTimes[k][m],
@@ -761,10 +764,12 @@ func (mgr *ResourceManager) LogStats() {
 			mid := float32(mgr.apiTimes[k][m][len(mgr.apiTimes[k][m])/2]) / float32(time.Millisecond)
 			min := float32(mgr.apiTimes[k][m][0]) / float32(time.Millisecond)
 			max := float32(mgr.apiTimes[k][m][len(mgr.apiTimes[k][m])-1]) / float32(time.Millisecond)
+			p95 := float32(mgr.apiTimes[k][m][len(mgr.apiTimes[k][m])-1-len(mgr.apiTimes[k][m])/20]) /
+				float32(time.Millisecond)
 			p99 := float32(mgr.apiTimes[k][m][len(mgr.apiTimes[k][m])-1-len(mgr.apiTimes[k][m])/100]) /
 				float32(time.Millisecond)
-			log.Infof("%-50v %-10v %-10v %-10v %-10v", m+" "+k+" latency: ",
-				mid, min, max, p99)
+			log.Infof("%-50v %-10v %-10v %-10v %-10v %-10v", m+" "+k+" latency: ",
+				mid, min, max, p95, p99)
 		}
 	}
 }

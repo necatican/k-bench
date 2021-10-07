@@ -47,6 +47,7 @@ type LatencyMetric struct {
 	Mid float32
 	Min float32
 	Max float32
+	P95 float32
 	P99 float32
 }
 
